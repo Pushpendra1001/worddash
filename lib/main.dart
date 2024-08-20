@@ -14,6 +14,7 @@ void main() {
         Provider(create: (context) => BackgroundMusicService()),
       ],
       child:  MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Word Dash',
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.red,
