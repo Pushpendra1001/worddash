@@ -32,10 +32,16 @@ class _MatchSoundScreenState extends State<MatchSoundScreen> {
       Sound(name: 'Cat', soundPath: 'sounds/cat_meow.mp3', iconPath: 'assets/icons/cat.jpg'),
       Sound(name: 'Bird', soundPath: 'sounds/bird_chirp.mp3', iconPath: 'assets/icons/bird.jpg'),
       Sound(name: 'Horse', soundPath: 'sounds/horse_neigh.mp3', iconPath: 'assets/icons/horse.jpg'),
+      Sound(name: 'Rotary Phone', soundPath: 'sounds/rotary_phone.mp3', iconPath: 'assets/icons/phone.jpg'),
       Sound(name: 'Cow', soundPath: 'sounds/cow_moo.mp3', iconPath: 'assets/icons/cow.jpg'),
       Sound(name: 'Sheep', soundPath: 'sounds/sheep_baa.mp3', iconPath: 'assets/icons/sheep.jpg'),
       Sound(name: 'Pig', soundPath: 'sounds/pig_oink.mp3', iconPath: 'assets/icons/pig.jpg'),
-      Sound(name: 'Rooster', soundPath: 'sounds/rooster_crow.mp3', iconPath: 'assets/icons/rooster.jpg'),
+      Sound(name: 'Dial-up Internet', soundPath: 'sounds/dialup.mp3', iconPath: 'assets/icons/computer.jpg'),
+      Sound(name: 'Cassette', soundPath: 'sounds/cassette.mp3', iconPath: 'assets/icons/cassette.jpg'),
+    Sound(name: 'Wind Chimes', soundPath: 'sounds/wind_chimes.mp3', iconPath: 'assets/icons/chimes.jpg'),
+    Sound(name: 'Rainfall', soundPath: 'sounds/rainfall.mp3', iconPath: 'assets/icons/rain.jpg'),
+      Sound(name: 'Typewriter', soundPath: 'sounds/typewriter.mp3', iconPath: 'assets/icons/typewriter.jpg'),
+            Sound(name: 'Rooster', soundPath: 'sounds/rooster_crow.mp3', iconPath: 'assets/icons/rooster.jpg'),
     ];
 
     _gameSounds = Helpers.pickRandomItems<Sound>(allSounds, 4).cast<Sound>();
