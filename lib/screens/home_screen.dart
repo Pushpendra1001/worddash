@@ -57,15 +57,15 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
         
-              const SizedBox(height: 20),
-              _buildMenuButton(
-                context,
-                'Settings',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
-                ),
-              ),
+              // const SizedBox(height: 20),
+              // _buildMenuButton(
+              //   context,
+              //   'Settings',
+              //   () => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              //   ),
+              // ),
             ],
           ),
         ),
