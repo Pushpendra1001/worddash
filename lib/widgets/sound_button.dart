@@ -17,10 +17,11 @@ class SoundButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center ,
         children: [
           Container(
-            width: 80,
-            height: 80,
+            width: 150,
+            height: 150,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
@@ -32,7 +33,7 @@ class SoundButton extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             label,
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white , fontSize: 30),
           ),
         ],
       ),

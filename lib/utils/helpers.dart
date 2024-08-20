@@ -1,7 +1,7 @@
 import 'dart:math';
 
 class Helpers {
-  static List<T> shuffleList<T>(List<T> list) {
+ static List<T> shuffleList<T>(List<T> list) {
     var random = Random();
     for (var i = list.length - 1; i > 0; i--) {
       var n = random.nextInt(i + 1);
@@ -12,6 +12,7 @@ class Helpers {
     return list;
   }
 
+ 
   static List pickRandomItems<T>(List<T> list, int count) {
     final shuffled = shuffleList(List.from(list));
     return shuffled.take(count).toList();
@@ -23,6 +24,8 @@ class Helpers {
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return "$twoDigitMinutes:$twoDigitSeconds";
   }
+
+  
 
   static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 }

@@ -1,5 +1,5 @@
 class AppConstants {
-  static const String appName = 'Sound Game';
+  static const String appName = 'Word Dash';
   static const String matchSoundTitle = 'Match the Sound';
   static const String oldSoundsTitle = 'Old Sounds';
   static const String relaxationTitle = 'Relaxation';

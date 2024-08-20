@@ -12,70 +12,85 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Sound Game'),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _buildMenuButton(
-              context,
-              'Match the Sound',
-              () => Navigator.push(
+            
+      body: Container(
+          
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: const AssetImage('assets/images/R.jpeg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Text("Relax and Feel", style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),),
+
+              SizedBox(height: 50,),
+
+              _buildMenuButton(
                 context,
-                MaterialPageRoute(builder: (context) => const MatchSoundScreen()),
+                'Match the Sound',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MatchSoundScreen()),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            _buildMenuButton(
-              context,
-              'Old Sounds',
-              () => Navigator.push(
+              const SizedBox(height: 20),
+              _buildMenuButton(
                 context,
-                MaterialPageRoute(builder: (context) => const OldSoundsScreen()),
+                'Old Sounds',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const OldSoundsScreen()),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            _buildMenuButton(
-              context,
-              'Relaxation',
-              () => Navigator.push(
+              const SizedBox(height: 20),
+              _buildMenuButton(
                 context,
-                MaterialPageRoute(builder: (context) => const RelaxationScreen()),
+                'Relaxation',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RelaxationScreen()),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            _buildMenuButton(
-              context,
-              'Leaderboard',
-              () => Navigator.push(
+        
+              const SizedBox(height: 20),
+              _buildMenuButton(
                 context,
-                MaterialPageRoute(builder: (context) => const LeaderboardScreen()),
+                'Settings',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            _buildMenuButton(
-              context,
-              'Settings',
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildMenuButton(BuildContext context, String title, VoidCallback onPressed) {
-    return ElevatedButton(
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.6,
+      child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.red,
+        backgroundColor: const Color.fromARGB(255, 115, 98, 92),
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
         textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        ),
       ),
-      child: Text(title),
+      child: Text(
+        title,
+        style: TextStyle(color: Colors.white),
+      ),
+      ),
     );
   }
 }

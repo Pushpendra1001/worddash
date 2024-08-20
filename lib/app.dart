@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 
-class SoundGameApp extends StatelessWidget {
-  const SoundGameApp({Key? key}) : super(key: key);
+class WordDashApp extends StatelessWidget {
+  const WordDashApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sound Game',
+      title: 'Word Dash',
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.red,
         scaffoldBackgroundColor: Colors.black,

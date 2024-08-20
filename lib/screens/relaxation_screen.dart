@@ -17,37 +17,40 @@ class _RelaxationScreenState extends State<RelaxationScreen> {
   double _progress = 0.0;
 
   final List<Sound> _relaxingSounds = [
-    Sound(name: 'Ocean Waves', soundPath: 'sounds/ocean_waves.mp3', iconPath: 'assets/icons/wave.jpg'),
-    Sound(name: 'Rainfall', soundPath: 'sounds/rainfall.mp3', iconPath: 'assets/icons/rain.jpg'),
-    Sound(name: 'Forest', soundPath: 'sounds/forest.mp3', iconPath: 'assets/icons/tree.jpg'),
-    Sound(name: 'Wind Chimes', soundPath: 'sounds/wind_chimes.mp3', iconPath: 'assets/icons/chimes.jpg'),
+    Sound(name: 'Perfect N', soundPath: 'sounds/rs1.mp3', iconPath: 'assets/icons/wave.jpg'),
+    Sound(name: 'Once In Paris', soundPath: 'sounds/rs2.mp3', iconPath: 'assets/icons/rain.jpg'),
+    Sound(name: 'Relaxed', soundPath: 'sounds/rs3.mp3', iconPath: 'assets/icons/tree.jpg'),
+    Sound(name: 'Lofi', soundPath: 'sounds/rs4.mp3', iconPath: 'assets/icons/chimes.jpg'),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Relaxation'),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/moon.jpg'),
+            image: AssetImage('assets/images/black.jpg'),
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
-          children: [
-            Expanded(
-              child: _currentSound != null
-                  ? _buildNowPlayingWidget()
-                  : const Center(
-                      child: Text(
-                        'Select a sound to relax',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
+        child: SafeArea(
+          child: Column(
+            children: [
+          Text("Relax and Feel", style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),),  
+          
+              Expanded(
+                child: _currentSound != null
+                    ? _buildNowPlayingWidget()
+                    : const Center(
+                        child: Text(
+                          'Select a sound to relax',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
                       ),
-                    ),
-            ),
-            _buildSoundList(),
-          ],
+              ),
+              _buildSoundList(),
+            ],
+          ),
         ),
       ),
     );
