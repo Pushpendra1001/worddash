@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
-import 'package:worddash/common_styles.dart';
-import 'package:worddash/services/audio_service.dart';
-import 'package:worddash/services/game_logic_service.dart';
-import 'package:worddash/widgets/custom_app_bar.dart';
-import 'package:worddash/widgets/game_board.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/sound_button.dart';
+import '../services/audio_service.dart';
+import '../models/sound.dart';
+import '../utils/helpers.dart';
 
 class MatchSoundScreen extends StatefulWidget {
   const MatchSoundScreen({Key? key}) : super(key: key);
@@ -15,117 +13,160 @@ class MatchSoundScreen extends StatefulWidget {
 }
 
 class _MatchSoundScreenState extends State<MatchSoundScreen> {
-  late AudioService _audioService;
-  late GameLogicService _gameLogicService;
+  final AudioService _audioService = AudioService();
+  List<Sound> _gameSounds = [];
+  Sound? _currentSound;
   int _score = 0;
-  int _round = 1;
-  bool _isGameOver = false;
+  int _roundsPlayed = 0;
+  final int _totalRounds = 10;
 
   @override
   void initState() {
     super.initState();
-    _audioService = Provider.of<AudioService>(context, listen: false);
-    _gameLogicService = Provider.of<GameLogicService>(context, listen: false);
-    _startNewRound();
+    _initializeGame();
   }
 
-  void _startNewRound() {
-    setState(() {
-      _gameLogicService.generateNewRound();
-      _round++;
-    });
-  }
+  void _initializeGame() {
+    final allSounds = [
+      Sound(name: 'Dog', soundPath: 'sounds/dog_bark.mp3', iconPath: 'assets/icons/dog.jpg'),
+      Sound(name: 'Cat', soundPath: 'sounds/cat_meow.mp3', iconPath: 'assets/icons/cat.jpg'),
+      Sound(name: 'Bird', soundPath: 'sounds/bird_chirp.mp3', iconPath: 'assets/icons/bird.jpg'),
+      Sound(name: 'Horse', soundPath: 'sounds/horse_neigh.mp3', iconPath: 'assets/icons/horse.jpg'),
+      Sound(name: 'Cow', soundPath: 'sounds/cow_moo.mp3', iconPath: 'assets/icons/cow.jpg'),
+      Sound(name: 'Sheep', soundPath: 'sounds/sheep_baa.mp3', iconPath: 'assets/icons/sheep.jpg'),
+      Sound(name: 'Pig', soundPath: 'sounds/pig_oink.mp3', iconPath: 'assets/icons/pig.jpg'),
+      Sound(name: 'Rooster', soundPath: 'sounds/rooster_crow.mp3', iconPath: 'assets/icons/rooster.jpg'),
+    ];
 
-  void _onCorrectMatch() {
-    setState(() {
-      _score += 10;
-      if (_round < 10) {
-        _startNewRound();
-      } else {
-        _isGameOver = true;
-      }
-    });
-  }
-
-  void _onIncorrectMatch() {
-    // Optionally deduct points or implement lives system
-  }
-
-  void _restartGame() {
-    setState(() {
-      _score = 0;
-      _round = 1;
-      _isGameOver = false;
-      _startNewRound();
-    });
+    _gameSounds = Helpers.pickRandomItems(allSounds, 4) as List<Sound>;
+    _currentSound = Helpers.pickRandomItems(_gameSounds, 1).first;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Match the Sound',
-        actions: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Text(
-                'Score: $_score',
-                style: AppTheme.bodyStyle.copyWith(fontWeight: FontWeight.bold),
+      appBar: const CustomAppBar(title: 'Match the Sound'),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Score: $_score', style: const TextStyle(fontSize: 24, color: Colors.white)),
+                Text('Round: $_roundsPlayed/$_totalRounds', style: const TextStyle(fontSize: 24, color: Colors.white)),
+              ],
+            ),
+          ),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemCount: _gameSounds.length,
+              itemBuilder: (context, index) {
+                return SoundButton(
+                  iconPath: _gameSounds[index].iconPath,
+                  label: _gameSounds[index].name,
+                  onPressed: () => _onSoundButtonPressed(_gameSounds[index]),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: _playCurrentSound,
+              child: const Text('Play Sound'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
           ),
         ],
       ),
-      body: SafeArea(
-        child: _isGameOver ? _buildGameOverScreen() : _buildGameScreen(),
+    );
+  }
+
+  void _onSoundButtonPressed(Sound sound) {
+    if (sound == _currentSound) {
+      setState(() {
+        _score++;
+        _roundsPlayed++;
+      });
+      _showFeedback(true);
+    } else {
+      setState(() {
+        _roundsPlayed++;
+      });
+      _showFeedback(false);
+    }
+
+    if (_roundsPlayed >= _totalRounds) {
+      _endGame();
+    } else {
+      _nextRound();
+    }
+  }
+
+  void _playCurrentSound() {
+    if (_currentSound != null) {
+      _audioService.playSound(_currentSound!.soundPath);
+    }
+  }
+
+  void _showFeedback(bool correct) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(correct ? 'Correct!' : 'Wrong, try again!'),
+        backgroundColor: correct ? Colors.green : Colors.red,
+        duration: const Duration(seconds: 1),
       ),
     );
   }
 
-  Widget _buildGameScreen() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            'Round $_round: Match the sound with the correct image',
-            style: AppTheme.bodyStyle,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Expanded(
-          child: GameBoard(
-            
-            onCorrectMatch: _onCorrectMatch,
-            onIncorrectMatch: _onIncorrectMatch,
-          ),
-        ),
-      ],
-    );
+  void _nextRound() {
+    setState(() {
+      _currentSound = Helpers.pickRandomItems(_gameSounds, 1).first;
+    });
   }
 
-  Widget _buildGameOverScreen() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Game Over!',
-            style: AppTheme.headlineStyle,
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'Your Score: $_score',
-            style: AppTheme.bodyStyle,
-          ),
-          const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: _restartGame,
-            child: const Text('Play Again'),
-          ),
-        ],
-      ),
+  void _endGame() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Game Over'),
+          content: Text('Your final score is $_score out of $_totalRounds.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Play Again'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  _score = 0;
+                  _roundsPlayed = 0;
+                  _initializeGame();
+                });
+              },
+            ),
+            TextButton(
+              child: const Text('Main Menu'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

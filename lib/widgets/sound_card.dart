@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:worddash/common_styles.dart';
 
 class SoundCard extends StatelessWidget {
@@ -40,10 +40,11 @@ class SoundCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
+            Image.asset(
               iconPath,
-              height: 60,
-              color: isPlaying ? Colors.white : AppTheme.primaryColor,
+              width: 48,
+              height: 48,
+              color: isPlaying ? Colors.white  : Colors.black,
             ),
             const SizedBox(height: 12),
             Text(

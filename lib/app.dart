@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:worddash/common_styles.dart';
-import 'package:worddash/routes.dart';
+import 'screens/home_screen.dart';
 
 class SoundGameApp extends StatelessWidget {
   const SoundGameApp({Key? key}) : super(key: key);
@@ -10,9 +8,15 @@ class SoundGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sound Game',
-      theme: AppTheme.themeData,
-      initialRoute: AppRoutes.home,
-      routes: AppRoutes.routes,
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.red,
+        scaffoldBackgroundColor: Colors.black,
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white),
+        ),
+      ),
+      home: const HomeScreen(),
     );
   }
 }
