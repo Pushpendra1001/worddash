@@ -133,6 +133,8 @@ class _MatchSoundScreenState extends State<MatchSoundScreen> {
       });
       _showFeedback(true);
     } else {
+      _audioService.stopSound();
+
       setState(() {
         _roundsPlayed++;
       });
