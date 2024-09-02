@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
-import '../widgets/custom_app_bar.dart';
-import '../widgets/sound_button.dart';
-import '../services/audio_service.dart';
-import '../models/sound.dart';
+import 'package:worddash/models/sound.dart';
+import 'package:worddash/services/audio_service.dart';
+import 'package:worddash/widgets/custom_app_bar.dart';
+// Adjust the import according to your project structure
 
-class OldSoundsScreen extends StatelessWidget {
+class OldSoundsScreen extends StatefulWidget {
   const OldSoundsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final AudioService audioService = AudioService();
-    final List<Sound> oldSounds = [
-      Sound(name: 'Rotary Phone', soundPath: 'sounds/rotary_phone.mp3', iconPath: 'assets/icons/phone.jpg'),
+  _OldSoundsScreenState createState() => _OldSoundsScreenState();
+}
+
+class _OldSoundsScreenState extends State<OldSoundsScreen> {
+  final AudioService _audioService = AudioService();
+  final List<Sound> oldSounds = [
+    Sound(name: 'Rotary Phone', soundPath: 'sounds/rotary_phone.mp3', iconPath: 'assets/icons/phone.jpg'),
       Sound(name: 'Typewriter', soundPath: 'sounds/typewriter.mp3', iconPath: 'assets/icons/typewriter.jpg'),
        Sound(name: 'Ocean Waves', soundPath: 'sounds/ocean_waves.mp3', iconPath: 'assets/icons/wave.jpg'),
     Sound(name: 'Rainfall', soundPath: 'sounds/rainfall.mp3', iconPath: 'assets/icons/rain.jpg'),
-    Sound(name: 'Forest', soundPath: 'sounds/forest.mp3', iconPath: 'assets/icons/tree.jpg'),
+    
       Sound(name: 'Vinyl Record', soundPath: 'sounds/vinyl_record.mp3', iconPath: 'assets/icons/vinyl.jpg'),
       Sound(name: 'TV Static', soundPath: 'sounds/tv_static.mp3', iconPath: 'assets/icons/tv.jpg'),
     Sound(name: 'Wind Chimes', soundPath: 'sounds/wind_chimes.mp3', iconPath: 'assets/icons/chimes.jpg'),
       Sound(name: 'Cassette', soundPath: 'sounds/cassette.mp3', iconPath: 'assets/icons/cassette.jpg'),
       Sound(name: 'Dial-up Internet', soundPath: 'sounds/dialup.mp3', iconPath: 'assets/icons/computer.jpg'),
-    ];
 
+  ];
+
+  @override
+  void dispose() {
+    
+    _audioService.stopSound();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Old Sounds'),
       body: GridView.builder(
@@ -36,11 +49,39 @@ class OldSoundsScreen extends StatelessWidget {
         itemCount: oldSounds.length,
         itemBuilder: (context, index) {
           return SoundButton(
-            iconPath: oldSounds[index].iconPath,
-            label: oldSounds[index].name,
-            onPressed: () => audioService.playSound(oldSounds[index].soundPath),
+            sound: oldSounds[index],
+            onPressed: () {
+              _audioService.playSound(oldSounds[index].soundPath);
+            },
           );
         },
+      ),
+    );
+  }
+}
+
+class SoundButton extends StatelessWidget {
+  final Sound sound;
+  final VoidCallback onPressed;
+
+  const SoundButton({
+    Key? key,
+    required this.sound,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      child: CircleAvatar(
+        backgroundImage: AssetImage(sound.iconPath),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(sound.name),
+          ],
+        ),
       ),
     );
   }

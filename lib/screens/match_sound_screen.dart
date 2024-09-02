@@ -35,7 +35,6 @@ class _MatchSoundScreenState extends State<MatchSoundScreen> {
       Sound(name: 'Rotary Phone', soundPath: 'sounds/rotary_phone.mp3', iconPath: 'assets/icons/phone.jpg'),
       Sound(name: 'Cow', soundPath: 'sounds/cow_moo.mp3', iconPath: 'assets/icons/cow.jpg'),
       Sound(name: 'Sheep', soundPath: 'sounds/sheep_baa.mp3', iconPath: 'assets/icons/sheep.jpg'),
-      Sound(name: 'Pig', soundPath: 'sounds/pig_oink.mp3', iconPath: 'assets/icons/pig.jpg'),
       Sound(name: 'Dial-up Internet', soundPath: 'sounds/dialup.mp3', iconPath: 'assets/icons/computer.jpg'),
       Sound(name: 'Cassette', soundPath: 'sounds/cassette.mp3', iconPath: 'assets/icons/cassette.jpg'),
     Sound(name: 'Wind Chimes', soundPath: 'sounds/wind_chimes.mp3', iconPath: 'assets/icons/chimes.jpg'),
@@ -53,6 +52,13 @@ class _MatchSoundScreenState extends State<MatchSoundScreen> {
     setState(() {
       _gameSounds = Helpers.shuffleList(_gameSounds);
     });
+  }
+
+   @override
+  void dispose() {
+    // Stop the audio service when the widget is disposed
+    _audioService.stopSound();
+    super.dispose();
   }
 
   @override
@@ -120,6 +126,7 @@ class _MatchSoundScreenState extends State<MatchSoundScreen> {
 
   void _onSoundButtonPressed(Sound sound) {
     if (sound == _currentSound) {
+      _audioService.stopSound();
       setState(() {
         _score++;
         _roundsPlayed++;
@@ -138,6 +145,8 @@ class _MatchSoundScreenState extends State<MatchSoundScreen> {
       _nextRound();
     }
   }
+ 
+
 
   void _playCurrentSound() {
     if (_currentSound != null) {
