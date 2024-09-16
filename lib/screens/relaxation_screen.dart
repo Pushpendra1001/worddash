@@ -72,7 +72,7 @@ class _RelaxationScreenState extends State<RelaxationScreen> {
                         child: Text(
                           'Select a sound to relax',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 32,
                             color: Colors.white,
                             shadows: [
                               Shadow(
@@ -105,7 +105,7 @@ class _RelaxationScreenState extends State<RelaxationScreen> {
         Text(
           _currentSound!.name,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 28,
             color: Colors.white,
             fontWeight: FontWeight.bold,
             shadows: [
@@ -177,26 +177,27 @@ class _RelaxationScreenState extends State<RelaxationScreen> {
       children: [
         Text(
           'Timer: ${_formatDuration(_timerDuration)}',
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: Colors.white, fontSize: 28),
         ),
+        SizedBox(height: 20,),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () => _setTimer(15 * 60),
-              child: Text('15m'),
+              child: Text('15m' , style: TextStyle(color: Colors.white , fontSize: 24),),
               style: ElevatedButton.styleFrom(),
             ),
             SizedBox(width: 10),
             ElevatedButton(
               onPressed: () => _setTimer(30 * 60),
-              child: Text('30m'),
+               child: Text('30m' , style: TextStyle(color: Colors.white , fontSize: 24),),
               style: ElevatedButton.styleFrom(),
             ),
             SizedBox(width: 10),
             ElevatedButton(
               onPressed: () => _setTimer(60 * 60),
-              child: Text('1h'),
+               child: Text('1h' , style: TextStyle(color: Colors.white , fontSize: 24),),
               style: ElevatedButton.styleFrom(),
             ),
           ],
@@ -229,7 +230,7 @@ class _RelaxationScreenState extends State<RelaxationScreen> {
                   const SizedBox(height: 8),
                   Text(
                     _relaxingSounds[index].name,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white , fontSize: 24),
                   ),
                 ],
               ),
