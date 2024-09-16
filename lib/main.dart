@@ -5,7 +5,6 @@ import 'package:worddash/screens/home_screen.dart';
 import 'package:worddash/services/background_music_service.dart';
 import 'app.dart';
 
-
 void main() {
   runApp(
     MultiProvider(

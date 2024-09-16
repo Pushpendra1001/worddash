@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SoundButton extends StatelessWidget {
   final String iconPath;
@@ -33,7 +34,10 @@ class SoundButton extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             label,
-            style: const TextStyle(color: Colors.white , fontSize: 30),
+            style: GoogleFonts.jockeyOne().copyWith(
+              fontSize: 32,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

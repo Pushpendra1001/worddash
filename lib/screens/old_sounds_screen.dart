@@ -77,7 +77,7 @@ class SoundButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(sound.name),
+            Text(sound.name , style: TextStyle(color: Colors.white , fontSize: 24),),
           ],
         ),
       ),

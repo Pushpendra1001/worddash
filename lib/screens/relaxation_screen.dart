@@ -40,7 +40,7 @@ class _RelaxationScreenState extends State<RelaxationScreen> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/black.jpg'),
+            image: AssetImage('assets/images/background3.jpg'),
             fit: BoxFit.cover,
           ),
         ),

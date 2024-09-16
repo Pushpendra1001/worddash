@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:worddash/common/custombutton.dart';
+import 'package:worddash/screens/settings_Screen.dart';
 import '../widgets/custom_app_bar.dart';
 import 'match_sound_screen.dart';
 import 'old_sounds_screen.dart';
 import 'relaxation_screen.dart';
-import 'settings_screen.dart';
-import 'leaderboard_screen.dart';
+
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,10 +18,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
             
       body: Container(
-          
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: const AssetImage('assets/images/R.jpeg'),
+          image: const AssetImage('assets/images/background2.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -25,12 +28,14 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
-              Text("Relax and Feel", style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),),
+             
+              Spacer(),
+              
+              Text("Relax and Feel", style: GoogleFonts.jockeyOne(fontSize: 62 , color: Colors.white , fontWeight: FontWeight.bold ),),
 
               SizedBox(height: 50,),
 
-              _buildMenuButton(
+              buildMenuButton(
                 context,
                 'Match the Sound',
                 () => Navigator.push(
@@ -39,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              _buildMenuButton(
+              buildMenuButton(
                 context,
                 'Old Sounds',
                 () => Navigator.push(
@@ -48,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              _buildMenuButton(
+              buildMenuButton(
                 context,
                 'Relaxation',
                 () => Navigator.push(
@@ -56,9 +61,8 @@ class HomeScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const RelaxationScreen()),
                 ),
               ),
-        
               // const SizedBox(height: 20),
-              // _buildMenuButton(
+              // buildMenuButton(
               //   context,
               //   'Settings',
               //   () => Navigator.push(
@@ -66,31 +70,57 @@ class HomeScreen extends StatelessWidget {
               //     MaterialPageRoute(builder: (context) => const SettingsScreen()),
               //   ),
               // ),
+              const SizedBox(height: 20),
+                buildMenuButton(
+              context,
+              'Quit',
+              () => _showExitConfirmationDialog(context),
+            ),
+        
+              // const SizedBox(height: 20),
+              // buildMenuButton(
+              //   context,
+              //   'Settings',
+              //   () => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              //   ),
+              // ),
+              
+              
+Spacer(),
+
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildMenuButton(BuildContext context, String title, VoidCallback onPressed) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.6,
-      child: ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 115, 98, 92),
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(color: Colors.white),
-      ),
-      ),
+
+  void _showExitConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Exit'),
+          content: Text('Are you sure you want to exit?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Exit'),
+              onPressed: () {
+                SystemNavigator.pop(); // Exit the app
+              },
+            ),
+          ],
+        );
+      },
     );
   }
-}
